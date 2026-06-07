@@ -19,7 +19,7 @@ schedule.every().minute.at(":00").do(kiem_tra_va_thong_bao)
 if __name__ == "__main__":
     print("🚀 Hệ thống Bot Nhắc Việc đang chạy. Nhấn Ctrl+C để dừng.")
     
-    # Chạy vòng lặp vô tận để duy trì chương trình
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # # Chạy vòng lặp vô tận để duy trì chương trình
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
