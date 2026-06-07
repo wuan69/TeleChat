@@ -1,6 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta, timezone
 import os
+import pytz
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,8 +24,10 @@ def lay_cong_viec_hien_tai():
         df['Ngày'] = df['Ngày'].astype(str).str.strip()
         df['Khung giờ'] = df['Khung giờ'].apply(chuan_hoa_gio)
         
-        # LẤY MÚI GIỜ VIỆT NAM (UTC+7)
-        mui_gio_vn = timezone(timedelta(hours=7))
+        # LẤY MÚI GIỜ VIỆT NAM (UTC+7) bằng thư viện
+        # mui_gio_vn = timezone(timedelta(hours=7))
+        # now = datetime.now(mui_gio_vn)
+        mui_gio_vn = pytz.timezone('Asia/Ho_Chi_Minh')
         now = datetime.now(mui_gio_vn)
         
         # Dịch ngày hệ thống sang định dạng Excel của bạn
