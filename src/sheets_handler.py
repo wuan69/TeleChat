@@ -37,8 +37,14 @@ def lay_cong_viec_hien_tai():
         
         print(f"🕒 Đang quét lịch: {ngay_hom_nay} - {gio_hien_tai}")
         
+        
+        # Chỉnh cho nó flexible hơn trong 5p thì vẫn gửi được
+        cac_gio_hop_le = [(now - timedelta(minutes=i)).strftime('%H:%M') for i in range(6)]
+        # Thay thế dòng code lọc DataFrame của bạn
+        cong_viec_den_han = df[(df['Ngày'] == ngay_hom_nay) & (df['Khung giờ'].isin(cac_gio_hop_le))]
+        
         # 2. Lọc các dòng khớp cả Ngày và Khung giờ
-        cong_viec_den_han = df[(df['Ngày'] == ngay_hom_nay) & (df['Khung giờ'] == gio_hien_tai)]
+        # cong_viec_den_han = df[(df['Ngày'] == ngay_hom_nay) & (df['Khung giờ'] == gio_hien_tai)]
         
         danh_sach_tin_nhan = []
         for index, row in cong_viec_den_han.iterrows():
