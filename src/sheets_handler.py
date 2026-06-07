@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import os
 from dotenv import load_dotenv
 
@@ -23,7 +23,9 @@ def lay_cong_viec_hien_tai():
         df['Ngày'] = df['Ngày'].astype(str).str.strip()
         df['Khung giờ'] = df['Khung giờ'].apply(chuan_hoa_gio)
         
-        now = datetime.now()
+        # LẤY MÚI GIỜ VIỆT NAM (UTC+7)
+        mui_gio_vn = timezone(timedelta(hours=7))
+        now = datetime.now(mui_gio_vn)
         
         # Dịch ngày hệ thống sang định dạng Excel của bạn
         day_map = {
@@ -40,15 +42,14 @@ def lay_cong_viec_hien_tai():
         
         danh_sach_tin_nhan = []
         for index, row in cong_viec_den_han.iterrows():
-            tin_nhan = f"🔔 *BÁO THỨC LỊCH TRÌNH!*\n\n"
+            # Thay đổi dấu * thành thẻ <b> </b>
+            tin_nhan = f"🔔 <b>BÁO THỨC LỊCH TRÌNH!</b>\n\n"
             
-            # Lấy đúng tên cột Hoạt động của bạn
             hoat_dong = row.get('Hoạt động & Chi tiết trọng tâm', 'Không có nội dung')
-            tin_nhan += f"🎯 *Hoạt động:* {hoat_dong}\n\n"
+            tin_nhan += f"🎯 <b>Hoạt động:</b> {hoat_dong}\n\n"
             
-            # Lấy cột Link
             if 'Link' in df.columns and pd.notna(row['Link']):
-                tin_nhan += f"🔗 *Tài liệu/Link:* {row['Link']}"
+                tin_nhan += f"🔗 <b>Tài liệu/Link:</b> {row['Link']}"
                 
             danh_sach_tin_nhan.append(tin_nhan)
             
