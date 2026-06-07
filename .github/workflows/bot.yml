@@ -2,7 +2,7 @@ name: Bot Nhac Viec Truc Tuyen
 
 on:
   schedule:
-    - cron: '* * * * *'  # Chạy mỗi phút
+    - cron: '*/5 * * * *' # Chạy mỗi phút
   workflow_dispatch:      # Nút bấm chạy thử thủ công
 
 jobs:
