@@ -1,0 +1,32 @@
+name: Bot Nhac Viec Truc Tuyen
+
+on:
+  schedule:
+    - cron: '* * * * *'  # Chạy mỗi phút
+  workflow_dispatch:      # Nút bấm chạy thử thủ công
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Kéo mã nguồn về máy chủ
+        uses: actions/checkout@v4
+
+      - name: 🐍 Cài đặt môi trường Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip' # Tối ưu hóa để cài thư viện nhanh hơn
+
+      - name: 📦 Cài đặt thư viện
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🚀 Khởi chạy Bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CSV_URL: ${{ secrets.CSV_URL }}
+        run: python src/main.py
